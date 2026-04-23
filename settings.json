@@ -1,0 +1,96 @@
+{
+  "permissions": {
+    "allow": [
+      "mcp__atlassian__getAccessibleAtlassianResources",
+      "mcp__atlassian__atlassianUserInfo",
+      "mcp__atlassian__search",
+      "mcp__atlassian__fetch",
+      "mcp__atlassian__searchConfluenceUsingCql",
+      "mcp__atlassian__getConfluencePage",
+      "mcp__atlassian__getConfluenceSpaces",
+      "mcp__atlassian__getPagesInConfluenceSpace",
+      "mcp__atlassian__getConfluencePageDescendants",
+      "mcp__atlassian__getConfluencePageFooterComments",
+      "mcp__atlassian__getConfluencePageInlineComments",
+      "mcp__atlassian__getConfluenceCommentChildren",
+      "mcp__atlassian__searchJiraIssuesUsingJql",
+      "mcp__atlassian__getJiraIssue",
+      "mcp__atlassian__getVisibleJiraProjects",
+      "mcp__atlassian__getJiraProjectIssueTypesMetadata",
+      "mcp__atlassian__getJiraIssueTypeMetaWithFields",
+      "mcp__atlassian__getTransitionsForJiraIssue",
+      "mcp__atlassian__getJiraIssueRemoteIssueLinks",
+      "mcp__atlassian__lookupJiraAccountId",
+      "mcp__atlassian__jiraRead",
+      "mcp__bitbucket__bb_request",
+      "mcp__bitbucket__get_current_user",
+      "mcp__bitbucket__list_repositories",
+      "mcp__bitbucket__add_pr_comment",
+      "mcp__bitbucket__approve_pull_request",
+      "mcp__bitbucket__create_pull_request",
+      "mcp__bitbucket__decline_pull_request",
+      "mcp__bitbucket__find_pull_request",
+      "mcp__bitbucket__get_pr_activity",
+      "mcp__bitbucket__get_pr_diff",
+      "mcp__bitbucket__get_pull_request",
+      "mcp__bitbucket__list_pr_comments",
+      "mcp__bitbucket__merge_pull_request",
+      "mcp__bitbucket__request_changes",
+      "mcp__ide__getDiagnostics",
+      "Bash(*)",
+      "Read(*)",
+      "Edit(*)",
+      "Write(*)",
+      "Glob(*)",
+      "Grep(*)",
+      "WebSearch(*)",
+      "WebFetch(*)"
+    ],
+    "deny": [
+      "Bash(rm -rf /*)",
+      "Bash(rm -rf ~/*)",
+      "Bash(rm -rf *)",
+      "Bash(rm -f *)",
+      "Bash(sudo rm *)",
+      "Bash(shred *)",
+      "Bash(truncate *)",
+      "Bash(dd *)",
+      "Bash(mkfs *)",
+      "Bash(fdisk *)",
+      "Bash(git clean *)",
+      "Bash(git reset --hard *)",
+      "Bash(git rebase *)",
+      "Bash(git push --force *)",
+      "Read(.env)",
+      "Read(**/.env)",
+      "Read(**/secrets/**/*)",
+      "Read(**/*.key)",
+      "Read(**/*.pem)",
+      "Read(**/id_rsa)",
+      "Read(**/*.p12)",
+      "Read(**/*.pfx)",
+      "Read(**/token)",
+      "Read(**/credentials)"
+    ],
+    "ask": [
+      "Bash(git push *)",
+      "Bash(sudo *)",
+      "Bash(rm *)"
+    ]
+  },
+  "statusLine": {
+    "type": "command",
+    "command": "python3 ~/.claude/statusline-command.sh"
+  },
+  "enabledPlugins": {
+    "clangd-lsp@claude-plugins-official": true
+  },
+  "effortLevel": "xhigh",
+  "tui": "default",
+  "mcpServers": {
+    "atlassian": {
+      "type": "http",
+      "url": "https://mcp.atlassian.com/v1/mcp"
+    }
+  }
+}

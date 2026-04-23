@@ -1,0 +1,13 @@
+# Never commit credentials or personal state
+.credentials.json
+settings.local.json
+*.key
+*.pem
+*.p12
+*.pfx
+id_rsa*
+token
+credentials
+
+# Backups created by install.sh
+*.bak.*
