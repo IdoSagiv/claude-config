@@ -86,7 +86,7 @@
     "clangd-lsp@claude-plugins-official": true
   },
   "effortLevel": "xhigh",
-  "tui": "default",
+  "tui": "fullscreen",
   "mcpServers": {
     "atlassian": {
       "type": "http",
