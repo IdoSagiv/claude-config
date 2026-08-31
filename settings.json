@@ -22,6 +22,8 @@
       "mcp__atlassian__getJiraIssueRemoteIssueLinks",
       "mcp__atlassian__lookupJiraAccountId",
       "mcp__atlassian__jiraRead",
+      "mcp__hailo-docs__search_hailo_docs",
+      "mcp__hailo-docs__list_available_documents",
       "mcp__bitbucket__bb_request",
       "mcp__bitbucket__get_current_user",
       "mcp__bitbucket__list_repositories",
@@ -37,7 +39,6 @@
       "mcp__bitbucket__merge_pull_request",
       "mcp__bitbucket__request_changes",
       "mcp__ide__getDiagnostics",
-      "Bash(*)",
       "Read(*)",
       "Edit(*)",
       "Write(*)",
@@ -57,10 +58,6 @@
       "Bash(dd *)",
       "Bash(mkfs *)",
       "Bash(fdisk *)",
-      "Bash(git clean *)",
-      "Bash(git reset --hard *)",
-      "Bash(git rebase *)",
-      "Bash(git push --force *)",
       "Read(.env)",
       "Read(**/.env)",
       "Read(**/secrets/**/*)",
@@ -73,7 +70,10 @@
       "Read(**/credentials)"
     ],
     "ask": [
-      "Bash(git push *)",
+      "Bash(git clean *)",
+      "Bash(git reset --hard *)",
+      "Bash(git rebase *)",
+      "Bash(git push --force *)",
       "Bash(sudo *)",
       "Bash(rm *)"
     ]
@@ -83,10 +83,13 @@
     "command": "python3 ~/.claude/statusline-command.sh"
   },
   "enabledPlugins": {
-    "clangd-lsp@claude-plugins-official": true
+    "clangd-lsp@claude-plugins-official": true,
+    "superpowers@claude-plugins-official": true,
+    "skill-creator@claude-plugins-official": true
   },
   "effortLevel": "xhigh",
-  "tui": "fullscreen",
+  "tui": "default",
+  "skipAutoPermissionPrompt": true,
   "mcpServers": {
     "atlassian": {
       "type": "http",
