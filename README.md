@@ -5,13 +5,13 @@ Personal [Claude Code](https://claude.com/claude-code) configuration: permission
 ## Contents
 
 - **`settings.json`** — permission allow/deny/ask rules, statusline hook, plugin and MCP server registrations
-- **`statusline-command.sh`** — Python script rendering model, context bar, rate-limit countdowns, project, and git branch
+- **`statusline-command.sh`** — Python script rendering model, context bar, session cost, rate-limit countdowns, project, and git branch
 - **`install.sh`** — symlinks files into `~/.claude/` (backs up any existing files first)
 
 ## Statusline
 
 ```text
-Opus 4.7 (1M) │ ████████████ 42% 420k/1.0M ⏱️ 12m 5s │ 5h: 23% (3h14m) 7d: 67% (4d1h) │ claude-config │ main
+Opus 4.7 (1M) │ ████████████ 42% 420k/1.0M ⏱️ 12m 5s │ $3.47 │ 5h: 23% (3h14m) 7d: 67% (4d1h) │ claude-config │ main
 ```
 
 Segments, left to right:
@@ -20,11 +20,12 @@ Segments, left to right:
 - **Context bar** — fill proportional to window used; green < 65%, yellow 65–85%, red ≥ 85%
 - **Percent used** and **tokens used / window size** (e.g. `420k/1.0M`)
 - **⏱️ Session duration** — wall-clock since session start
+- **Session cost** — total cost of the current session in USD (e.g. `$3.47`)
 - **Rate limits** — 5-hour and 7-day usage percent, with countdown until reset (same color thresholds)
 - **Project** — basename of the working directory
 - **Git branch** — current branch, or short commit SHA in detached HEAD
 
-Rate-limit and context segments are hidden when the underlying data isn't provided by Claude Code.
+Rate-limit, cost, and context segments are hidden when the underlying data isn't provided by Claude Code.
 
 ## Install
 

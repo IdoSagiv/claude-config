@@ -98,6 +98,11 @@ ctx_label = f"{pct_color}{pct}%{RESET}"
 ctx_tokens = f"{DIM}{fmt(ctx_used)}/{fmt(ctx_size)}{RESET}"
 parts.append(f"{bar_str} {ctx_label} {ctx_tokens} ⏱️ {DIM}{duration_str}{RESET}")
 
+# Session cost
+cost_usd = (data.get('cost', {}) or {}).get('total_cost_usd')
+if cost_usd is not None:
+    parts.append(f"{WHITE}${cost_usd:.2f}{RESET}")
+
 # Rate limits (5-hour and 7-day usage)
 def usage_color(p):
     if p >= 85:
