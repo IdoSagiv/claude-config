@@ -8,6 +8,7 @@ CLAUDE_DIR="$HOME/.claude"
 FILES=(
     "settings.json"
     "statusline-command.sh"
+    "hooks/pr-review-title.py"
 )
 
 # ── Uninstall ────────────────────────────────────────────────────────────────
@@ -33,6 +34,7 @@ mkdir -p "$CLAUDE_DIR"
 for f in "${FILES[@]}"; do
     src="$REPO_DIR/$f"
     target="$CLAUDE_DIR/$f"
+    mkdir -p "$(dirname "$target")"
 
     if [[ -e "$target" || -L "$target" ]]; then
         if [[ -L "$target" ]] && [[ "$(readlink "$target")" == "$src" ]]; then
