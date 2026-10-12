@@ -9,6 +9,7 @@ FILES=(
     "settings.json"
     "statusline-command.sh"
     "hooks/pr-review-title.py"
+    "commands/pr-review.md"
 )
 
 # ── Uninstall ────────────────────────────────────────────────────────────────

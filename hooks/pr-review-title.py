@@ -1,11 +1,9 @@
 #!/usr/bin/env python3
-"""UserPromptSubmit hook: name the session pr-review-<number>-<repo> for /pr-review."""
+"""UserPromptSubmit hook: name the session pr-review-<number>[-<repo>] for /pr-review."""
 import json
 import re
 import subprocess
 import sys
-
-DEFAULT_REPO = "platform-sw"
 
 
 def repo_from_origin(cwd):
@@ -24,10 +22,11 @@ def main():
     if not match:
         return
     number, repo = match.groups()
-    repo = repo or repo_from_origin(hook_input.get("cwd", ".")) or DEFAULT_REPO
+    repo = repo or repo_from_origin(hook_input.get("cwd", "."))
+    title = f"pr-review-{number}-{repo}" if repo else f"pr-review-{number}"
     print(json.dumps({"hookSpecificOutput": {
         "hookEventName": "UserPromptSubmit",
-        "sessionTitle": f"pr-review-{number}-{repo}",
+        "sessionTitle": title,
     }}))
 
 
