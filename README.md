@@ -6,7 +6,10 @@ Personal [Claude Code](https://claude.com/claude-code) configuration: permission
 
 - **`settings.json`** — permission allow/deny/ask rules, statusline hook, plugin and MCP server registrations
 - **`statusline-command.sh`** — Python script rendering model, context bar, session cost, rate-limit countdowns, project, and git branch
-- **`install.sh`** — symlinks files into `~/.claude/` (backs up any existing files first)
+- **`CLAUDE.md`** — global instructions loaded in every session
+- **`commands/pr-review.md`** — `/pr-review <number> [repo]`: local review of a BitBucket PR, nothing posted
+- **`hooks/pr-review-title.py`** — names a `/pr-review` session `pr-review-<number>[-<repo>]`
+- **`install.sh`** — symlinks files into `~/.claude/` (backs up any existing files first), then optionally installs skills and the Bitbucket MCP server
 
 ## Statusline
 
@@ -37,10 +40,26 @@ cd claude-config
 
 Then restart Claude Code.
 
+`install.sh` asks two optional questions:
+
+- **Skills** — installs `find-skills`, `herdr` and `crit` with the [skills CLI](https://github.com/vercel-labs/skills). Needs `npx`.
+- **Bitbucket MCP server** — clones and builds [mcp-server-bitbucket](https://github.com/IdoSagiv/mcp-server-bitbucket) next to this repo (override with `BITBUCKET_MCP_DIR`), prompts for an API token, email and workspace, and registers it at user scope. Needs `node`, `npm` and `claude`.
+
+## Other MCP servers
+
+Add these per project, from inside the project directory:
+
+```bash
+claude mcp add --transport http atlassian https://mcp.atlassian.com/v1/mcp
+claude mcp add --transport sse hailo-docs <internal hailo-docs SSE URL>
+```
+
+Run `/mcp` in Claude Code to authenticate Atlassian.
+
 ## Uninstall
 
 ```bash
 ./install.sh --uninstall
 ```
 
-Removes the symlinks only. Any `*.bak.*` backups created during install are left in place.
+Removes the symlinks only. Any `*.bak.*` backups created during install, skills and MCP servers are left in place.
