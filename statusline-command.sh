@@ -85,9 +85,12 @@ parts.append(f"{BRIGHT_CYAN}{BOLD}{model}{RESET}")
 # Session duration from cost.total_duration_ms
 duration_ms = int((data.get('cost', {}) or {}).get('total_duration_ms', 0) or 0)
 duration_s = duration_ms // 1000
-d_hours, d_rem = divmod(duration_s, 3600)
+d_days, d_day_rem = divmod(duration_s, 86400)
+d_hours, d_rem = divmod(d_day_rem, 3600)
 d_mins, d_secs = divmod(d_rem, 60)
-if d_hours > 0:
+if d_days > 0:
+    duration_str = f"{d_days}d {d_hours}h {d_mins}m"
+elif d_hours > 0:
     duration_str = f"{d_hours}h {d_mins}m {d_secs}s"
 elif d_mins > 0:
     duration_str = f"{d_mins}m {d_secs}s"
