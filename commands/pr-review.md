@@ -1,7 +1,7 @@
 ---
 description: Thorough local review of a BitBucket PR, no posting
 argument-hint: <pr-number> [repo]
-allowed-tools: Read, Grep, Glob, Task, Bash(git:*), mcp__bitbucket
+allowed-tools: Read, Grep, Glob, Task, Bash(git:*), mcp__bitbucket, mcp__atlassian
 disable-model-invocation: true
 ---
 
@@ -20,9 +20,40 @@ If the resolved repo has no PR #$1, stop and tell me rather than guessing.
 
 - Read the PR description, the diff, and all existing comments and review
   threads, resolved ones and inline comments included.
+- Read the Jira ticket for background. Find its key in the branch name,
+  PR title, description, or commit messages. Read its description, all comments, and
+  attachments' names. Also read the linked tickets (blocks, relates,
+  duplicates, clones), the parent epic, and sub-tasks, one level from the
+  main ticket only. Use what you learn to judge the change against the
+  real requirement, not only the PR description. If there is no ticket
+  key, or the ticket cannot be read, say so in the Summary and go on.
 - Apply every check in the local review skills. Delegate to the local
-  review agents where they fit; require each to report what it examined,
-  not only what it found.
+  review agents where they fit; give each the ticket background and the
+  scope, and require each to report what it examined, not only what it
+  found.
+
+## Scope
+
+The scope is what the Jira ticket and the PR description set out to do.
+Read as much of the surrounding codebase as helps you judge the change.
+The scope limits what you report, not what you read.
+- Keep findings on the changed code and on the bugs it causes at its
+  boundaries.
+- Tag a finding `out-of-scope` when it is about code the PR doesn't need
+  to touch, or asks for work beyond the ticket: refactors of nearby code,
+  old issues on paths the PR doesn't use, follow-up features. Still list
+  it with its severity. Write the comment as a follow-up suggestion, not
+  a request to change this PR. An out-of-scope blocker stays a blocker.
+- Do the same for existing threads: flag the ones that ask the author for
+  work outside the scope.
+
+## Age
+
+Separate from scope, mark each finding by when the problem came in:
+- `new`: introduced by this PR.
+- `older`: already in the code before this PR. Still in scope if the PR
+  touches or depends on that path.
+- `mixed`: older code that this PR makes worse or exposes.
 
 ## 1. Is this the right change?
 
@@ -49,13 +80,17 @@ wrong change.
   files. Most real bugs live at the boundary between changed and unchanged
   code.
 - Diff against stated intent: flag anything it does that the description
-  doesn't mention.
+  or the Jira ticket doesn't mention. Also flag anything the ticket asks
+  for that the diff doesn't do, unless a sibling PR or sub-task covers it.
+  If you can't tell whether another PR covers it, write the finding as a
+  question to the author.
 - What's missing, not just what's wrong: error handling, tests, cleanup on
   failure paths.
 
 ## 3. Reconcile with existing comments
 
-- Don't repeat a point already made; if you agree, mark it +1.
+- Don't repeat a point already made; if you agree, list it as agreed
+  under Existing threads. Never write a +1 reply.
 - Addressed by a later commit, say so.
 - Not addressed but the thread was resolved or went quiet, flag it. Those
   are the ones that slip through.
@@ -96,7 +131,7 @@ code and is telling them what he found.
 
 Every finding must stand alone. When I paste one into BitBucket the author
 sees only that sentence, with no summary above it, so don't write comments
-that depend on "as mentioned above" or on the severity tag to make sense.
+that depend on "as mentioned above" or on the tags to make sense.
 The N-number is for my reference only, never part of the posted text.
 
 ## Output
@@ -105,7 +140,8 @@ Be terse. Thoroughness applies to the reviewing, not the writing. Depth of
 analysis must not show up as length of output.
 - One line per finding, two only if the fix isn't obvious from the first.
 - Conclusions, not reasoning. I'll ask for reasoning.
-- Number every new comment N1, N2, N3, in severity order, highest first.
+- Number every new comment N1, N2, N3: in-scope first, then
+  out-of-scope, each group in severity order, highest first.
   Numbering is stable for the rest of the session: if I ask you to revise
   or drop one, keep the original numbers on everything else and don't
   renumber.
@@ -127,14 +163,17 @@ allocator internals". Confidence: high/med/low. A fundamental design
 objection goes here, not buried below.
 
 **New comments**
-- `N1` `[blocker] file.cpp:42` then the comment text, postable as written.
-- `N2` `[minor] other.cpp:88` then the comment text.
+- `N1` `[blocker, new] file.cpp:42` then the comment text, postable as
+  written.
+- `N2` `[minor, older] other.cpp:88` then the comment text.
+- `N3` `[minor, older, out-of-scope] util.cpp:12` then the comment text.
 
 **Existing threads**
-- `#3 addressed` / `#5 unaddressed`, one clause each. These are BitBucket
-  thread IDs, not my numbering.
+- `#3 addressed` / `#5 unaddressed` / `#6 agreed` / `#7 out-of-scope`, one
+  clause each. These are BitBucket thread IDs, not my numbering.
 
 **Coverage**
+- Jira tickets read.
 - Files and call paths examined. Skill categories skipped, if any.
 - Bare list, no prose.
 
