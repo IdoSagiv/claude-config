@@ -50,8 +50,6 @@
     "deny": [
       "Bash(rm -rf /*)",
       "Bash(rm -rf ~/*)",
-      "Bash(rm -rf *)",
-      "Bash(rm -f *)",
       "Bash(sudo rm *)",
       "Bash(shred *)",
       "Bash(truncate *)",
