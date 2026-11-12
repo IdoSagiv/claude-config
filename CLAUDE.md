@@ -13,3 +13,8 @@ you just did, hedging ("it seems that", "you might want to consider").
 
 Applies to: chat replies, commit messages, PR descriptions, docs.
 Does not apply to: code, identifiers, log output, quoted material.
+
+## BitBucket
+
+When merging a BitBucket PR, never change the default merge strategy
+(squash). Do not pass any other merge strategy to the merge API or tool.
